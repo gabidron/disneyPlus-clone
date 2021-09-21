@@ -48,6 +48,7 @@ const Carusel = styled(Slider)`
   }
   button {
     z-index: 1;
+    color: fff;
   }
 `;
 
