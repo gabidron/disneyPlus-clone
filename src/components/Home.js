@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import ImgSlider from "./ImgSlider";
 import Viewers from "./Viewers";
 import Movies from "./Movies";
+import db from "../firebase";
 
 const Home = () => {
+  useEffect(() => {
+    db.collection("movie").onSnapshot((snapshot) => {
+      let tempMovies = snapshot.docs.map((doc) => {
+        console.log(doc.data());
+        return { id: dispatchEvent.id, ...doc.data() };
+      });
+    });
+  }, []);
   return (
     <Container>
       <ImgSlider />
