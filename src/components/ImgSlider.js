@@ -3,6 +3,8 @@ import styled from "styled-components";
 
 import Slider from "react-slick";
 
+
+
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -23,6 +25,12 @@ const ImgSlider = () => {
       <Wrap>
         <img src="./images/slider-badag.jpg" />
       </Wrap>
+      <Wrap>
+        <img src="./images/slider-scale.jpg" />
+      </Wrap>
+      <Wrap>
+        <img src="./images/slider-scales.jpg" />
+      </Wrap>
     </Carusel>
   );
 };
@@ -32,11 +40,14 @@ export default ImgSlider;
 const Carusel = styled(Slider)`
   margin-top: 20px;
 
-  ul li button {
-    &before {
-      font-size: 200px;
-      color: rgb(150, 158, 171);
-    }
+  .slick-next:before, .slick-prev:before {
+    font-size: 30px;
+    color: rgb(150, 158, 171);
+  }
+
+  .slick-dots li button::before{
+    font-size: 10px;
+    
   }
 
   li.slick-active button::before {
