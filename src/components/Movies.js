@@ -1,6 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+
+
 const Movies = () => {
+
+  const showsUrl = 'https://api.tvmaze.com/shows';
+  const [genders, setGenders] = useState([]);
+  let showsGenders = new Set();
+  useEffect(() => {
+    fetch(showsUrl)
+      .then(res => res.json())
+      .then(data => {
+
+
+        data.forEach(element => {
+
+          element.genres.forEach(gender => {
+            showsGenders.add(gender);
+          })
+        });
+
+        //setUniqueCategories([...new Set(categories)]);
+
+        setGenders(Array.from(showsGenders));
+        console.log(genders);
+      })
+
+  }, [])
+
   return (
     <Container>
       <h4>Recommended for you</h4>
@@ -18,6 +45,8 @@ const Movies = () => {
           <img src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/6EA416AD3B15FCC1BADC817A932A57FFF707556DB2233FFCB4CFEB7C8EEDE23C/scale?width=400&aspectRatio=1.78&format=jpeg" />
         </Wrap>
       </Content>
+      {genders.map(gender => { return (<h4>{gender}</h4>) })
+      }
     </Container>
   );
 };
