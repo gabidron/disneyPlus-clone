@@ -1,11 +1,20 @@
 import React from "react";
 import styled from "styled-components";
+import { auth } from "../firebase";
+
 const LogIn = () => {
+  console.log(auth);
   return (
     <Container>
       <CTA>
         <CTALogoOne src="/images/cta-logo-one.svg" />
-        <SignUp>Get All there</SignUp>
+        <SignUp
+          onClick={() => {
+            document.getElementById("modal").style.display = "block";
+          }}
+        >
+          Get All there
+        </SignUp>
         <Description>
           Get Premier Access to Raya and the Last Dragon for an aditional fee
           with a Disney+ subscription. As of 03/26/21, the price of Disney+ and
@@ -13,11 +22,55 @@ const LogIn = () => {
         </Description>
         <CTALogoTwo src="/images/cta-logo-two.png" />
       </CTA>
+      <LoginContainer id="modal">
+        <LoginContainerHeader
+          onClick={() => {
+            document.getElementById("modal").style.display = "none";
+          }}
+        >
+          <h2>Log in</h2>
+          <span>X</span>
+        </LoginContainerHeader>
+      </LoginContainer>
     </Container>
   );
 };
 
 export default LogIn;
+
+const LoginContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 12px;
+  color: black;
+`;
+const LoginContainerHeader = styled.div`
+  border-bottom: 2px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+  & span {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    font-size: 25px;
+    font-weight: 600;
+    border: 1px solid #000;
+    padding: 1px 2px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+`;
+
 const Container = styled.div`
   position: relative;
   display: flex;
