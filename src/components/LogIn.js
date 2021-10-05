@@ -6,14 +6,18 @@ const LogIn = () => {
   console.log(auth);
   return (
     <Container>
-      <CTA>
+      <CTA id="cta">
         <CTALogoOne src="/images/cta-logo-one.svg" />
         <SignUp
           onClick={() => {
-            document.getElementById("modal").style.display = "block";
+            if (auth.currentUser) {
+            } else {
+              document.getElementById("cta").style.display = "none";
+              document.getElementById("modal").style.display = "block";
+            }
           }}
         >
-          Get All there
+          {auth.currentUser ? "Log out" : "Get All there"}
         </SignUp>
         <Description>
           Get Premier Access to Raya and the Last Dragon for an aditional fee
@@ -22,22 +26,36 @@ const LogIn = () => {
         </Description>
         <CTALogoTwo src="/images/cta-logo-two.png" />
       </CTA>
+
       <LoginContainer id="modal">
         <LoginContainerHeader
           onClick={() => {
             document.getElementById("modal").style.display = "none";
+            document.getElementById("cta").style.display = "block";
           }}
         >
           <h2>Log in</h2>
           <span>X</span>
         </LoginContainerHeader>
+        <LoginMain>
+          <input type="email" />
+          <input type="password" />
+          <button>Log in</button>
+          <button>Log in with google</button>
+          <button>New account</button>
+
+          <button>Sign up with google</button>
+          <input type="email" />
+          <input type="password" />
+          <button>Create account</button>
+        </LoginMain>
       </LoginContainer>
     </Container>
   );
 };
 
 export default LogIn;
-
+const LoginMain = styled.div``;
 const LoginContainer = styled.div`
   position: absolute;
   top: 50%;
@@ -45,9 +63,10 @@ const LoginContainer = styled.div`
   transform: translate(-50%, -50%);
   width: 500px;
   height: 500px;
-  background-color: rgba(255, 255, 255, 1);
+  background-color: rgba(255, 255, 255, 0.75);
   border-radius: 12px;
   color: black;
+  display: none;
 `;
 const LoginContainerHeader = styled.div`
   border-bottom: 2px solid #000;
