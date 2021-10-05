@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 
 const Movies = () => {
   const showsUrl = "https://api.tvmaze.com/shows";
@@ -21,6 +22,8 @@ const Movies = () => {
       });
   }, []);
 
+  const history = useHistory();
+
   return (
     <Container>
       {genders.map((gender) => {
@@ -33,7 +36,12 @@ const Movies = () => {
                 if (show.genres.includes(gender) && noOfShows < 4) {
                   noOfShows++;
                   return (
-                    <Wrap>
+                    <Wrap
+                      onClick={() => {
+                        console.log(show);
+                        history.push(`/Detail?id=${show.id}`);
+                      }}
+                    >
                       <img src={show.image.medium} />
                     </Wrap>
                   );

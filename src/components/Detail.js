@@ -1,36 +1,51 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import Parser from 'html-react-parser';
 const Detail = () => {
+  const [show, setShow] = useState();
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    const id = query.get('id')
+    console.log(id);
+
+    fetch(`https://api.tvmaze.com/shows/${id}`)
+      .then(res => res.json())
+      .then(data => setShow(data));
+  }, []);
   return (
     <Container>
       <Background>
-        <img src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/4F39B7E16726ECF419DD7C49E011DD95099AA20A962B0B10AA1881A70661CE45/scale?width=1440&aspectRatio=1.78&format=jpeg" />
+        {
+          show && <img src={show.image.original} />
+        }
       </Background>
-      <ImageTitle>
-        <img src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/D7AEE1F05D10FC37C873176AAA26F777FC1B71E7A6563F36C6B1B497CAB1CEC2/scale?width=1440&aspectRatio=1.78" />
-      </ImageTitle>
-      <Controls>
-        <PlayButton>
-          <img src="/images/play-icon-black.png" />
-          <span>PLAY</span>
-        </PlayButton>
-        <TrailerButton>
-          <img src="/images/play-icon-white.png" />
-          <span>Trailer</span>
-        </TrailerButton>
-        <AddButton>
-          <span>+</span>
-        </AddButton>
-        <GroupWatchButton>
-          <img src="/images/group-icon.png" />
-        </GroupWatchButton>
-      </Controls>
-      <SubTitle>sdasd sadasdjk na dasd bsad kasdu asdaksdb</SubTitle>
-      <Description>
-        lasdn lksad slkdn sdjn ajdbsanh dsa daskdbn sa das d asd askdb askbd
-        asdf s fdaf adfadfdfdsafds fsdaf adf asdf sda fsad fasd fsad fsadf af
-        asdf s df a sdfad fas fsad fsadf sdf
-      </Description>
+      <SideMenu>
+        <h2>{show && show.name}</h2>
+        <Controls>
+          <PlayButton>
+            <img src="/images/play-icon-black.png" />
+            <span>PLAY</span>
+          </PlayButton>
+          <TrailerButton>
+            <img src="/images/play-icon-white.png" />
+            <span>Trailer</span>
+          </TrailerButton>
+          <AddButton>
+            <span>+</span>
+          </AddButton>
+          <GroupWatchButton>
+            <img src="/images/group-icon.png" />
+          </GroupWatchButton>
+        </Controls>
+        <SubTitle>
+          {show && show.genres.map(gen => {
+            return (<> {gen}</>)
+          })}
+        </SubTitle>
+        <Description>
+          {show && <>{Parser(show.summary)}</>}
+        </Description>
+      </SideMenu>
     </Container>
   );
 };
@@ -40,6 +55,22 @@ const Container = styled.div`
   min-height: calc(100vh - 60px);
   padding: 0 calc(3.5vw + 5px);
   position: relative;
+`;
+const SideMenu = styled.div`
+  position: absolute;
+  top:0;
+  left:0;
+  bottom:0;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+  padding: 15px;
+  background: rgba(9, 11, 19, 0.5);
+  max-width: 500px;
+  min-height: 100%;
 `;
 const Background = styled.div`
   position: fixed;
