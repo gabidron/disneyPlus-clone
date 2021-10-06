@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { auth } from "../firebase";
+import { auth, newUser } from "../firebase";
 
 const LogIn = () => {
   console.log(auth);
+
   return (
     <Container>
       <CTA id="cta">
@@ -68,7 +69,15 @@ const LogIn = () => {
           <input type="email" name="signUp__email" id="signUp__email" />
           <label for="signUp__pass">Password</label>
           <input type="password" name="signUp__pass" id="signUp__pass" />
-          <button>Create account</button>
+          <button
+            onClick={() => {
+              const email = document.getElementById("signUp__email").value;
+              const pass = document.getElementById("signUp__pass").value;
+              newUser(email, pass);
+            }}
+          >
+            Create account
+          </button>
 
           <h3 style={{ textAlign: "center" }}>Or</h3>
 
