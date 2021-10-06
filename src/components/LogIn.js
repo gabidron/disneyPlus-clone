@@ -13,7 +13,7 @@ const LogIn = () => {
             if (auth.currentUser) {
             } else {
               document.getElementById("cta").style.display = "none";
-              document.getElementById("modal").style.display = "block";
+              document.getElementById("modal").style.display = "flex";
             }
           }}
         >
@@ -31,45 +31,103 @@ const LogIn = () => {
         <LoginContainerHeader
           onClick={() => {
             document.getElementById("modal").style.display = "none";
-            document.getElementById("cta").style.display = "block";
+            document.getElementById("cta").style.display = "flex";
           }}
         >
-          <h2>Log in</h2>
+          <h2 id="modal__name">Log in</h2>
           <span>X</span>
         </LoginContainerHeader>
-        <LoginMain>
-          <input type="email" />
-          <input type="password" />
-          <button>Log in</button>
+        <LoginMain id="loginMain">
+          <label htmlFor="email__logIn">Email</label>
+          <input type="email" name="email__logIn" id="email__logIn" />
+          <label htmlFor="pass__logIn">Password</label>
+          <input type="password" name="pass__logIn" id="pass__logIn" />
+          <button
+            onClick={() => {
+              const email = document.getElementById("email__logIn").value;
+              const pass = document.getElementById("pass__logIn").value;
+              alert(pass);
+            }}
+          >
+            Log in
+          </button>
           <button>Log in with google</button>
-          <button>New account</button>
+          <button
+            onClick={() => {
+              document.getElementById("signUp__Container").style.display =
+                "flex";
+              document.getElementById("loginMain").style.display = "none";
+              document.getElementById("modal__name").innerText = "Sign Up";
+            }}
+          >
+            New account
+          </button>
+        </LoginMain>
+        <SignUpContainer id="signUp__Container">
+          <label htmlFor="signUp__email">Email</label>
+          <input type="email" name="signUp__email" id="signUp__email" />
+          <label for="signUp__pass">Password</label>
+          <input type="password" name="signUp__pass" id="signUp__pass" />
+          <button>Create account</button>
+
+          <h3 style={{ textAlign: "center" }}>Or</h3>
 
           <button>Sign up with google</button>
-          <input type="email" />
-          <input type="password" />
-          <button>Create account</button>
-        </LoginMain>
+          <button
+            onClick={() => {
+              document.getElementById("signUp__Container").style.display =
+                "none";
+              document.getElementById("loginMain").style.display = "flex";
+              document.getElementById("modal__name").innerText = "Log In";
+            }}
+          >
+            Back to sign in
+          </button>
+        </SignUpContainer>
       </LoginContainer>
     </Container>
   );
 };
 
 export default LogIn;
-const LoginMain = styled.div``;
+const LoginMain = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 25px 5px;
+  & button {
+    background-color: transparent;
+    color: white;
+    outline: none;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    font-size: 18px;
+    margin-top: 15px;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+  & input {
+    font-size: 15px;
+    outline: none;
+    border: none;
+    border-radius: 4px;
+  }
+`;
 const LoginContainer = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 500px;
-  height: 500px;
-  background-color: rgba(255, 255, 255, 0.75);
+  width: 350px;
+  height: 400px;
+  background-color: #0483ee;
+  color: #fff;
   border-radius: 12px;
-  color: black;
   display: none;
+  flex-direction: column;
+  text-transform: uppercase;
 `;
 const LoginContainerHeader = styled.div`
-  border-bottom: 2px solid #000;
+  border-bottom: 2px solid #fff;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -83,13 +141,39 @@ const LoginContainerHeader = styled.div`
     text-transform: uppercase;
     font-size: 25px;
     font-weight: 600;
-    border: 1px solid #000;
-    padding: 1px 2px;
+    border: 3px solid #fff;
+    padding: 2px;
+    margin: 2px;
     border-radius: 50%;
     cursor: pointer;
+    &:hover {
+      font-size: 27px;
+    }
   }
 `;
-
+const SignUpContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 25px 5px;
+  & button {
+    background-color: transparent;
+    color: white;
+    outline: none;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    font-size: 18px;
+    margin-top: 15px;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+  & input {
+    font-size: 15px;
+    outline: none;
+    border: none;
+    border-radius: 4px;
+  }
+  display: none;
+`;
 const Container = styled.div`
   position: relative;
   display: flex;
